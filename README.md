@@ -1,134 +1,129 @@
-ROCK-BROWSER-ANDROID-BUILD.md
-
-ROCK BROWSER — Android Build Specification
+ROCK BROWSER — ANDROID BUILD SPECIFICATION
 
 «Project: ROCK BROWSER
-Platform: Android
+Version: 1.0.0
+Platform: Android 10+
 Language: Kotlin
-Minimum Android Version: Android 10 / API 29
-Target SDK: Android SDK 35
 UI: Jetpack Compose + Material 3
-Architecture: MVVM + Clean Architecture
-Browser Engine: Android WebView / Chromium
-GitHub Integration: Optional native GitHub dashboard + OAuth PKCE
-Storage: Room + DataStore
-Networking: Retrofit + OkHttp
-Dependency Injection: Hilt/Dagger
-License: MIT»
+Browser engine: Android Chromium-based WebView
+Package: "com.sayanthrock.rockbrowser"
+Brand: Sayanth Rock»
 
 ---
 
-1. PROJECT OVERVIEW
+1. BUILD OBJECTIVE
 
-ROCK BROWSER is a modern Android web browser built around a fast Chromium-based browsing engine and a premium mobile-first Jetpack Compose interface.
+Build a complete, production-quality Android web browser called ROCK BROWSER.
 
-The application combines:
+ROCK BROWSER combines:
 
-- Full web browsing
-- Multi-tab browsing
-- Private/incognito browsing
+- Real web browsing
+- Modern mobile browser controls
+- ROCK premium/Liquid Glass design
+- Multiple tabs
+- Search
 - Bookmarks
 - History
 - Downloads
+- Private browsing
 - Site permissions
-- Search and URL navigation
-- Modern Liquid Glass-inspired UI
-- Optional native GitHub integration
-- GitHub repository browsing
-- GitHub issues and pull requests
-- GitHub OAuth authentication
-- Native GitHub URL interception
+- Privacy controls
+- Dark/light/system themes
+- GitHub OAuth
+- GitHub API integration
+- GitHub repository/release access
+- Android-native sharing
+- Android file picker
+- Production APK/AAB builds
+- GitHub Actions CI/CD
 
-The original project describes ROCK BROWSER as a production-grade Android browser with a secure Chromium-based engine, premium Compose UI, and optional native GitHub dashboard.
+This must be a functional browser, not a visual prototype.
 
----
-
-2. PRIMARY PRODUCT GOALS
-
-The application must prioritize:
-
-1. Fast browsing
-2. Simple navigation
-3. Reliable tab management
-4. Privacy
-5. Modern Android UI
-6. One-handed usability
-7. Stable state restoration
-8. Secure GitHub authentication
-9. Maintainable architecture
-10. Production-ready builds
-
-The browser should feel lightweight while still providing advanced features.
+Do not create fake browser functionality.
 
 ---
 
-3. SUPPORTED DEVICES
+2. IMPORTANT PRINCIPLES
 
-Minimum
+Follow these rules throughout development:
 
-- Android 10
-- API 29
-
-Target
-
-- Android SDK 35
-
-Recommended
-
-- Phones
-- Foldables
-- Tablets
-
-The supplied README specifies Android 10/API 29 or higher and SDK 35.
+1. Build the application incrementally.
+2. Keep code readable and maintainable.
+3. Use modern Android APIs.
+4. Avoid unnecessary dependencies.
+5. Never hard-code secrets.
+6. Never store passwords.
+7. Never fake GitHub authentication.
+8. Never bypass website security.
+9. Never disable SSL certificate validation.
+10. Never claim private browsing provides anonymity.
+11. Keep GitHub integration optional.
+12. Normal browsing must work without a GitHub account.
+13. Handle errors gracefully.
+14. Test every major feature.
+15. Do not leave core features as placeholders.
 
 ---
 
-4. TECHNOLOGY STACK
+3. TECHNOLOGY
 
-Core
+Use:
 
-- Kotlin
-- Android SDK
-- Android WebView
-- Chromium WebView engine
+Kotlin
+Jetpack Compose
+Material 3
+AndroidX
+Navigation Compose
+ViewModel
+StateFlow
+Coroutines
+Room
+DataStore
+Android WebView
+Android Keystore
+WorkManager where appropriate
 
-UI
+Use current stable versions compatible with the project environment.
 
-- Jetpack Compose
-- Material 3
-- Compose Navigation
-- Compose Animation
+Do not use obsolete Android APIs when modern equivalents exist.
 
-Architecture
+---
 
-- MVVM
-- Clean Architecture
-- Repository pattern
-- StateFlow
-- Kotlin Coroutines
+4. ANDROID CONFIGURATION
 
-Storage
+Application ID:
 
-- Room
-- DataStore
+com.sayanthrock.rockbrowser
 
-Networking
+Application name:
 
-- Retrofit
-- OkHttp
-- Kotlin serialization or another suitable JSON serializer
+ROCK BROWSER
 
-Dependency Injection
+Minimum SDK:
 
-- Hilt preferred
+Android 10 / API 29
 
-The README specifically identifies Kotlin, Jetpack Compose Material 3, MVVM/Clean Architecture, Coroutines/StateFlow, Room, DataStore, Retrofit, OkHttp, and Hilt/Dagger.
+Target SDK:
+
+Use the latest stable Android SDK available in the build environment.
+
+Support:
+
+- Portrait
+- Landscape
+- Gesture navigation
+- Edge-to-edge
+- Light mode
+- Dark mode
+- Dynamic screen sizes
 
 ---
 
 5. PROJECT STRUCTURE
 
-Use a modular structure similar to:
+Use a clean modular architecture.
+
+Recommended:
 
 ROCK-BROWSER/
 │
@@ -139,1309 +134,1466 @@ ROCK-BROWSER/
 │   ├── database/
 │   ├── datastore/
 │   ├── network/
-│   └── ui/
+│   ├── security/
+│   └── designsystem/
+│
+├── browser/
+│   ├── engine/
+│   ├── navigation/
+│   ├── permissions/
+│   └── downloads/
 │
 ├── feature/
-│   ├── browser/
+│   ├── home/
+│   ├── tabs/
+│   ├── bookmarks/
+│   ├── history/
+│   ├── downloads/
+│   ├── private/
+│   ├── settings/
 │   ├── github/
-│   └── settings/
+│   └── about/
 │
 ├── docs/
-│   └── screenshots/
-│
-├── gradle/
 │
 ├── .github/
 │   └── workflows/
 │
 ├── README.md
-├── ROCK-BROWSER-ANDROID-BUILD.md
+├── LICENSE
 ├── SECURITY.md
 ├── CONTRIBUTING.md
-├── LICENSE
-└── settings.gradle.kts
+├── CODE_OF_CONDUCT.md
+└── CHANGELOG.md
 
-This follows the modular organization defined by the supplied README.
-
----
-
-6. APPLICATION MODULE
-
-The "app" module is responsible for:
-
-- Application initialization
-- Dependency injection
-- Navigation
-- Global theme
-- Activity setup
-- WebView lifecycle coordination
-- Global error handling
-- Application-level state
-
-Recommended package:
-
-com.sayanthrock.rockbrowser
+Adapt the structure where necessary, but preserve separation of concerns.
 
 ---
 
-7. BROWSER FEATURE MODULE
-
-Location:
-
-feature/browser/
-
-Responsibilities:
-
-- Browser screen
-- WebView management
-- Tabs
-- Navigation
-- Address bar
-- Search
-- History
-- Bookmarks
-- Downloads
-- Site permissions
-- Incognito mode
-- Browser settings
-
----
-
-8. HOME SCREEN
-
-The home screen should provide a clean starting point.
-
-Components
-
-- ROCK BROWSER branding
-- Address/search field
-- Search button
-- Quick shortcuts
-- Recent pages
-- Bookmarks
-- GitHub shortcut
-- Settings shortcut
-- Private browsing shortcut
-
-Design
+6. ARCHITECTURE
 
 Use:
 
+Compose UI
+    ↓
+ViewModel
+    ↓
+Use Cases
+    ↓
+Repositories
+    ↓
+Data Sources
+    ↓
+WebView / Room / DataStore / GitHub API
+
+Do not put business logic directly into Compose screens.
+
+Use dependency injection where it provides clear value.
+
+Avoid overengineering.
+
+---
+
+7. ROCK DESIGN SYSTEM
+
+Create a centralized ROCK design system.
+
+Design characteristics:
+
+- Premium
+- Minimal
+- Modern
+- Mobile-first
+- Dark-theme friendly
+- Liquid Glass inspired
 - Rounded surfaces
-- Dark-theme optimization
+- Soft elevation
 - Strong typography
-- Generous spacing
-- Subtle transparency
-- Lightweight animations
+- Clean spacing
+- Subtle animation
 
-The README explicitly defines a minimalist dark-theme-oriented Liquid Glass design with rounded surfaces and clean typography.
+Do not make the UI look like a generic Material demo.
 
----
-
-9. ADDRESS BAR
-
-The address bar must support both:
-
-https://example.com
-
-and:
-
-search query
-
-Behavior
-
-If the input looks like a URL:
-
-Open URL
-
-Otherwise:
-
-Search using configured search engine
-
-Features
-
-- URL normalization
-- Domain autocomplete
-- Search suggestions
-- Clear button
-- Loading indicator
-- Secure connection indicator
-- Page title
-- Copy URL
-- Share URL
-
-The original README specifies a unified URL/search field, domain autocomplete, and configurable default search engine.
+Material 3 should provide the foundation, while ROCK design tokens provide the visual identity.
 
 ---
 
-10. BROWSER NAVIGATION
+8. COLORS
+
+Dark theme:
+
+Black
+Charcoal
+Deep Gray
+White
+Subtle metallic accent
+
+Light theme:
+
+White
+Warm Gray
+Charcoal
+Subtle accent
+
+Do not scatter raw colors throughout the application.
+
+Create centralized theme tokens.
+
+---
+
+9. TYPOGRAPHY
+
+Use a clean modern font system.
 
 Provide:
+
+- Large title
+- Section title
+- Body
+- Label
+- Caption
+
+Maintain strong readability.
+
+Respect Android font scaling.
+
+Do not use extremely small text.
+
+---
+
+10. SHAPE SYSTEM
+
+Use consistent rounded corners.
+
+Recommended:
+
+Small: 12dp
+Medium: 16dp
+Large: 20dp
+Extra Large: 28dp
+
+Use consistent spacing.
+
+Avoid excessive rounded containers.
+
+---
+
+11. MAIN BROWSER SCREEN
+
+Create the primary browser screen.
+
+The browser should prioritize webpage content.
+
+Structure:
+
+┌─────────────────────────────┐
+│                             │
+│         WEB PAGE            │
+│                             │
+│                             │
+│                             │
+├─────────────────────────────┤
+│  ←  →  ↻   Address      ⋮   │
+├─────────────────────────────┤
+│  Home       Tabs       Menu │
+└─────────────────────────────┘
+
+Adapt the layout depending on screen size.
+
+---
+
+12. ADDRESS BAR
+
+Create a premium rounded address bar.
+
+Placeholder:
+
+Search or enter website address
+
+Support:
+
+- HTTPS URLs
+- HTTP URLs
+- Domains
+- Search queries
+- GitHub URLs
+- IP addresses where appropriate
+- URL normalization
+
+Examples:
+
+github.com
+https://github.com/SayanthRock
+youtube.com
+Android development
+
+If input is not a valid URL, search using the selected search engine.
+
+---
+
+13. SEARCH ENGINE
+
+Default search engine:
+
+Google
+
+Allow:
+
+- Google
+- Bing
+- DuckDuckGo
+- Brave Search
+- Ecosia
+- Custom search engine
+
+Search engine selection must be stored using DataStore.
+
+Do not require a search API.
+
+---
+
+14. WEB ENGINE
+
+Use Android's Chromium-based WebView for the first production version.
+
+Support:
+
+- HTML
+- CSS
+- JavaScript
+- Cookies
+- DOM storage
+- HTTPS
+- Local storage
+- Web APIs supported by Android WebView
+- Media playback
+- File uploads
+- Downloads
+- Multiple windows where supported
+
+Configure WebView carefully.
+
+---
+
+15. WEBVIEW SECURITY
+
+Apply secure defaults.
+
+Never:
+
+Disable SSL certificate validation
+Ignore certificate errors
+Expose arbitrary JavaScript bridges
+Allow unsafe file access unnecessarily
+Execute arbitrary native commands
+Store secrets inside WebView
+
+Use:
+
+- Safe Browsing where available
+- HTTPS
+- Origin validation
+- Secure WebView settings
+- Android permission controls
+
+Certificate errors must be treated as security-sensitive.
+
+---
+
+16. BROWSER NAVIGATION
+
+Implement:
 
 - Back
 - Forward
 - Reload
-- Stop loading
-- Home
-- Tabs
-- Share
-- Bookmark
-- Menu
+- Stop
+- Loading progress
 
-Navigation must correctly synchronize with WebView state.
+Behavior:
 
----
+Back:
+WebView can go back → navigate back
+Otherwise → follow normal Android navigation behavior
 
-11. WEBVIEW ENGINE
-
-Use Android's native WebView as the browser rendering engine.
-
-Responsibilities:
-
-- Page rendering
-- JavaScript execution
-- Navigation
-- Downloads
-- Permissions
-- Cookies
-- SSL handling
-- File selection
-- Media playback
-
-The README defines the browser engine as Android's native WebView powered by Chromium.
+Reload becomes Stop while the page is loading.
 
 ---
 
-12. WEBVIEW SECURITY
+17. TAB SYSTEM
 
-Configure WebView conservatively.
-
-Required:
-
-- Safe Browsing
-- Mixed-content blocking
-- Secure URL handling
-- HTTPS preference
-- Controlled JavaScript
-- Controlled file access
-- Controlled content access
-- Permission handling
-- SSL error handling
-
-Do not blindly bypass SSL certificate errors.
-
-The supplied README specifically requires mixed-content blocking, cross-origin tracking protections, and Safe Browsing.
-
----
-
-13. TAB MANAGEMENT
-
-The browser must support multiple tabs.
-
-Each tab should maintain:
-
-Tab ID
-URL
-Title
-Favicon
-Loading state
-WebView state
-Private/non-private state
-Last active timestamp
-
-Required actions
-
-- Create tab
-- Close tab
-- Switch tab
-- Duplicate tab
-- Reopen closed tab
-- Close all tabs
-- Close other tabs
-- Private tab
-- Restore previous tabs
-
-Tabs must avoid unnecessary page reloads.
-
-The README specifically calls for state-retained tab switching to prevent page reloads and memory leaks.
-
----
-
-14. TAB SWITCHER UI
-
-Create a dedicated tab overview.
-
-Each tab card should display:
-
-- Page preview or thumbnail
-- Page title
-- Domain
-- Close button
-- Private indicator
-
-Actions:
-
-+ New Tab
-Close
-Switch
-Close All
-New Private Tab
-
-Use smooth but lightweight Compose animations.
-
----
-
-15. BACKGROUND TAB MANAGEMENT
-
-Avoid keeping unlimited WebViews alive.
-
-Implement lifecycle-aware management.
-
-Consider:
-
-- Active WebView remains fully active
-- Background tabs may be paused
-- Memory pressure handling
-- State restoration
-- WebView cleanup after tab closure
-
-Goal:
-
-Fast switching
-+
-Low memory usage
-
----
-
-16. PRIVATE / INCOGNITO MODE
-
-Provide private browsing.
-
-Private sessions must:
-
-- Not appear in normal history
-- Not create normal bookmarks unless explicitly requested
-- Use separate session state
-- Clear temporary browsing state when closed
-- Display a clear private indicator
-
-The README requires incognito functionality and states that private mode leaves no trace.
-
----
-
-17. HISTORY
-
-Use Room for browsing history.
-
-Suggested entity:
-
-HistoryEntity
-
-id
-url
-title
-domain
-favicon
-visitedAt
-visitCount
-isPrivate
+Implement real multi-tab browsing.
 
 Features:
 
-- Recent history
-- Search history
-- Delete item
-- Delete selected items
-- Clear today
-- Clear all
-- Never store private sessions
+- New tab
+- Close tab
+- Switch tab
+- Duplicate tab
+- Tab title
+- Favicon
+- Loading indicator
+- Tab count
+- Restore closed tab
+- Persist normal tabs
+- Private tabs
+
+Example:
+
+ROCK BROWSER
+
+[ + ]
+
+Google                         ×
+google.com
+
+GitHub                         ×
+github.com
+
+YouTube                        ×
+youtube.com
 
 ---
 
-18. BOOKMARKS
+18. TAB MANAGEMENT
+
+Use a dedicated tab state model.
+
+Example data:
+
+Tab
+- id
+- url
+- title
+- favicon
+- isPrivate
+- isLoading
+- progress
+- canGoBack
+- canGoForward
+- lastAccessed
+
+Do not store WebView objects directly inside persistent database entities.
+
+---
+
+19. TAB PERFORMANCE
+
+Implement reasonable memory management.
+
+Use:
+
+- Lazy initialization
+- Tab state restoration
+- WebView cleanup when tabs close
+- Memory-aware handling
+
+Do not unnecessarily keep dozens of fully active WebViews alive.
+
+Do not unexpectedly destroy active user sessions.
+
+---
+
+20. NEW TAB PAGE
+
+Create a premium ROCK homepage.
+
+Show:
+
+ROCK BROWSER
+
+[ Search or enter website address ]
+
+Quick Access
+
+Google
+YouTube
+GitHub
+Gmail
+
+Recent Sites
+
+Bookmarks
+
+Allow users to customize shortcuts.
+
+Optional:
+
+- Clock
+- Wallpaper
+- Recently visited sites
+
+Keep startup fast.
+
+---
+
+21. BOOKMARKS
 
 Use Room.
-
-Suggested entity:
-
-BookmarkEntity
-
-id
-url
-title
-folder
-favicon
-createdAt
-updatedAt
 
 Features:
 
 - Add bookmark
 - Remove bookmark
 - Edit bookmark
-- Create folders
-- Move bookmark
-- Search bookmarks
-- Sort bookmarks
+- Folder support
+- Search
+- Sort
+- Move
+- Delete
+- Open
+- Import/export where practical
+
+Data:
+
+Bookmark
+- id
+- title
+- url
+- favicon
+- folderId
+- createdAt
+- updatedAt
 
 ---
 
-19. DOWNLOAD MANAGER
+22. HISTORY
 
-Support downloads initiated by WebView.
+Store history locally.
+
+Data:
+
+HistoryEntry
+- id
+- url
+- title
+- favicon
+- visitedAt
+
+Features:
+
+- Search
+- Open
+- Delete item
+- Delete today
+- Delete date range
+- Clear all
+
+Provide a confirmation for destructive actions.
+
+---
+
+23. PRIVATE MODE
+
+Create ROCK PRIVATE.
+
+Private mode must use an isolated browser session where practical.
+
+Do not persist normal:
+
+- History
+- Cookies
+- Web storage
+- Form data
+
+after the private session ends, within the limits of Android WebView.
+
+Clearly label private browsing.
+
+Display a short explanation:
+
+Private browsing prevents ROCK BROWSER
+from saving normal local browsing history.
+
+It does not make you anonymous online.
+
+---
+
+24. DOWNLOAD MANAGER
+
+Support downloads initiated by websites.
+
+Show:
+
+Downloads
+
+filename.zip
+25 MB
+
+████████░░ 80%
+
+2.3 MB/s
+
+Support:
+
+- Progress
+- Speed
+- Status
+- Cancel
+- Retry
+- Open
+- Share
+- Delete
+- Show location
+
+Use Android's appropriate download APIs.
+
+---
+
+25. FILE UPLOAD
+
+Support website file uploads.
+
+Use Android's Storage Access Framework.
+
+Support:
+
+- Images
+- Videos
+- Documents
+- Multiple selection where supported
+
+Do not request broad storage access unnecessarily.
+
+---
+
+26. CAMERA PERMISSION
+
+When a website requests camera access:
+
+1. Check Android permission.
+2. Request Android permission if required.
+3. Show clear user-facing explanation where appropriate.
+4. Grant only when authorized.
+5. Allow revocation through settings.
+
+Never silently grant camera access.
+
+---
+
+27. MICROPHONE PERMISSION
+
+Implement the same secure model for microphone access.
+
+Support sites such as:
+
+- Video conferencing
+- Voice recording
+- WebRTC applications
+
+Only grant after user authorization.
+
+---
+
+28. LOCATION PERMISSION
+
+Support website location requests.
+
+Never silently grant location.
+
+Allow users to revoke the permission.
+
+---
+
+29. NOTIFICATIONS
+
+Where supported by Android WebView and the implementation:
+
+Allow websites to request notifications.
 
 Provide:
 
-- Download detection
-- Download progress
-- Notification
-- Pause/resume where supported
-- Cancel
-- Open file
-- Share file
-- Download history
-
-Create a dedicated Downloads screen.
-
----
-
-20. SITE PERMISSIONS
-
-Manage:
-
-- Camera
-- Microphone
-- Location
-- Notifications
-- File access
-- Other WebView-supported permissions
-
-For every permission:
-
 Allow
-Ask
 Block
+Ask
 
-Users must be able to review permissions from Settings.
-
----
-
-21. SEARCH ENGINE
-
-Allow a configurable default search engine.
-
-Initial options can include:
-
-- Google
-- Bing
-- DuckDuckGo
-- Custom search URL
-
-Do not hard-code the search engine into browser logic.
-
-Create an abstraction:
-
-interface SearchEngine {
-    fun buildSearchUrl(query: String): String
-}
+Allow site-level management.
 
 ---
 
-22. ERROR HANDLING
-
-Provide user-friendly browser errors.
-
-Examples:
-
-No Internet Connection
-Page Cannot Be Loaded
-Connection Timed Out
-SSL Error
-Unsupported URL
-Download Failed
-Permission Denied
-
-Do not expose raw exceptions to users.
-
----
-
-23. GITHUB INTEGRATION
-
-GitHub integration is optional.
-
-Create:
-
-feature/github/
-
-The GitHub feature must remain separable from core browsing.
-
-The original README describes:
-
-- Secure OAuth
-- PKCE
-- Native dashboard
-- Repositories
-- Issues
-- Pull requests
-- GitHub URL interception.
-
----
-
-24. GITHUB AUTHENTICATION
-
-Use OAuth with PKCE.
-
-Never ship a confidential client secret inside the Android application.
-
-Authentication flow:
-
-User taps Sign in with GitHub
-        ↓
-Generate PKCE verifier/challenge
-        ↓
-Open GitHub authorization
-        ↓
-User approves
-        ↓
-Receive authorization callback
-        ↓
-Exchange authorization code
-        ↓
-Store authentication state securely
-        ↓
-Load GitHub dashboard
-
----
-
-25. GITHUB DASHBOARD
-
-The native dashboard should support:
-
-Profile
-
-- Avatar
-- Username
-- Name
-- Bio
-- Followers
-- Following
-- Public repositories
-
-Repositories
-
-- Repository list
-- Search
-- Language
-- Stars
-- Forks
-- Description
-- Updated date
-
-Issues
-
-- Open issues
-- Closed issues
-- Issue details
-
-Pull Requests
-
-- Open PRs
-- Closed PRs
-- PR details
-- Repository information
-
----
-
-26. GITHUB URL INTERCEPTION
-
-When a user opens a supported GitHub URL, the browser may offer native rendering.
-
-Examples:
-
-github.com/user/repository
-github.com/user/repository/issues
-github.com/user/repository/pulls
-
-Flow:
-
-GitHub URL detected
-        ↓
-Parse URL
-        ↓
-Determine resource
-        ↓
-Offer/open native GitHub viewer
-
-The README explicitly defines automatic native repository rendering for GitHub URLs.
-
-Provide a setting:
-
-Open GitHub links natively
-[ON/OFF]
-
----
-
-27. GITHUB API LAYER
-
-Use:
-
-Retrofit
-OkHttp
-
-Create:
-
-GitHubApi
-GitHubRepository
-GitHubRemoteDataSource
-GitHubLocalDataSource
-
-Do not place API calls directly inside Compose screens.
-
----
-
-28. NETWORK LAYER
-
-Recommended structure:
-
-core/network/
-├── RetrofitProvider
-├── OkHttpProvider
-├── NetworkResult
-├── NetworkError
-└── ConnectivityMonitor
-
-Handle:
-
-- Timeout
-- No connection
-- HTTP errors
-- Rate limits
-- Authentication failures
-- Server errors
-
----
-
-29. DATA LAYER
-
-Use repository interfaces.
-
-Example:
-
-UI
- ↓
-ViewModel
- ↓
-UseCase
- ↓
-Repository
- ↓
-Remote / Local Data Source
-
-This keeps the application testable and maintainable.
-
----
-
-30. DATABASE
-
-Room should store:
-
-- History
-- Bookmarks
-- Tabs where appropriate
-- Download metadata
-- GitHub cached information where useful
-
-The supplied README explicitly assigns Room to bookmarks/history and DataStore to preferences.
-
----
-
-31. DATASTORE
-
-Use DataStore for:
-
-- Theme
-- Search engine
-- Homepage
-- Browser preferences
-- GitHub native-link behavior
-- Privacy settings
-- Navigation preferences
-- Download preferences
-
-Avoid using DataStore for large relational datasets.
-
----
-
-32. SETTINGS
+30. SITE PERMISSIONS
 
 Create:
 
 Settings
-├── General
-├── Appearance
-├── Search
-├── Privacy
-├── Permissions
-├── Downloads
-├── GitHub
-├── Browser
-└── About
+→ Site permissions
+
+Categories:
+
+Camera
+Microphone
+Location
+Notifications
+Pop-ups
+Downloads
+JavaScript
+Cookies
+
+Store site-specific settings securely.
 
 ---
 
-33. APPEARANCE SETTINGS
+31. POP-UPS
 
-Support:
+Handle popup/new-window requests.
 
-System
-Light
-Dark
+Possible behavior:
 
-Also provide browser-specific visual preferences where practical.
+Open in new tab
+Open in current tab
+Block
 
-Design direction:
-
-- Dark luxury appearance
-- Liquid Glass surfaces
-- Rounded corners
-- Clear hierarchy
-- Minimal visual noise
+Do not allow abusive popup behavior to overwhelm the user.
 
 ---
 
-34. LIQUID GLASS UI
+32. COOKIES
 
-The visual language should use:
+Provide privacy controls:
 
-- Translucent surfaces
-- Rounded containers
-- Layered depth
-- Subtle blur where appropriate
-- Soft borders
-- Clean typography
-- Dynamic but restrained lighting
-- Smooth transitions
+Allow cookies
+Block third-party cookies
+Clear cookies
+Clear site data
 
-Do not overuse blur or transparency to the point that text becomes difficult to read.
+Do not unnecessarily break websites.
 
 ---
 
-35. MOBILE-FIRST NAVIGATION
+33. PRIVACY
 
-Primary navigation should remain reachable with one hand.
+Create a privacy section.
 
-Use a bottom navigation/control area.
+Include:
 
-Suggested controls:
+- Safe Browsing
+- Cookie controls
+- Clear browsing data
+- Site permissions
+- Do Not Track preference
+- Private browsing
+- Download controls
 
-Back
-Home
-Tabs
-Menu
+Explain what each feature actually does.
 
-The README specifically calls for bottom-anchored controls for one-handed use.
-
----
-
-36. ANIMATIONS
-
-Animations should be:
-
-- Fast
-- Smooth
-- Purposeful
-- Battery-conscious
-
-Use animations for:
-
-- Tab opening
-- Tab closing
-- Navigation
-- Loading
-- Bottom sheet presentation
-- Bookmark confirmation
-- GitHub login state
-- Page transitions
-
-Avoid excessive animation during continuous scrolling.
+Never make unsupported privacy claims.
 
 ---
 
-37. ACCESSIBILITY
+34. CLEAR BROWSING DATA
 
-Support:
+Provide:
 
-- Content descriptions
-- Large font sizes
-- Touch targets
-- Screen readers
-- High contrast
-- Reduced motion where appropriate
-- Keyboard navigation where applicable
+Clear:
 
-Never communicate important state through color alone.
+Browsing history
+Cookies
+Cached files
+Site data
+Downloads list
 
----
+Allow:
 
-38. ORIENTATION
+Last hour
+Last 24 hours
+Last 7 days
+Last 4 weeks
+All time
 
-Support:
-
-- Portrait
-- Landscape
-
-The UI must adapt to:
-
-- Small phones
-- Large phones
-- Foldables
-- Tablets
+Make destructive operations explicit.
 
 ---
 
-39. STATE MANAGEMENT
+35. GITHUB INTEGRATION
 
-Use:
+GitHub is an optional ROCK BROWSER feature.
 
-StateFlow
-SharedFlow
-CoroutineScope
-
-Screens should expose predictable UI state.
-
-Example:
-
-data class BrowserUiState(
-    val url: String = "",
-    val title: String = "",
-    val isLoading: Boolean = false,
-    val progress: Int = 0,
-    val canGoBack: Boolean = false,
-    val canGoForward: Boolean = false,
-    val error: BrowserError? = null
-)
-
----
-
-40. VIEWMODEL RULES
-
-ViewModels must:
-
-- Own screen state
-- Call use cases
-- Survive configuration changes
-- Avoid direct Android View references
-- Avoid direct database implementation
-- Avoid direct Retrofit calls
-
----
-
-41. CLEAN ARCHITECTURE
-
-Use three conceptual layers:
-
-Presentation
-Domain
-Data
-
-Example:
-
-BrowserScreen
-     ↓
-BrowserViewModel
-     ↓
-NavigateUseCase
-     ↓
-BrowserRepository
-     ↓
-WebView / Local Storage
-
----
-
-42. UI COMPONENT LIBRARY
-
-Create reusable components:
-
-RockButton
-RockIconButton
-RockTextField
-RockTopBar
-RockBottomBar
-RockGlassCard
-RockDialog
-RockBottomSheet
-RockLoadingIndicator
-RockTabCard
-RockBrowserToolbar
-RockEmptyState
-RockErrorState
-
-Keep styling centralized.
-
----
-
-43. THEME SYSTEM
+Normal browser functionality must remain fully usable without GitHub.
 
 Create:
 
-RockTheme
-RockColors
-RockTypography
-RockShapes
-RockDimensions
-RockAnimations
+Settings
+→ GitHub
 
-Do not scatter hard-coded design values throughout the application.
+and a GitHub shortcut on the home page.
 
 ---
 
-44. BROWSER TOOLBAR
+36. GITHUB LOGIN
 
-The toolbar should support:
+Use official GitHub OAuth.
 
-[Back] [Address/Search] [Reload] [Tabs]
+The ROCK BROWSER UI must NOT ask for:
 
-The exact layout may adapt depending on screen size.
+GitHub password
 
-The address field must show loading progress without becoming visually distracting.
+Instead show:
+
+Continue with GitHub
+
+Launch GitHub's official authorization interface.
+
+Use an Android-compatible secure OAuth architecture.
+
+Prefer:
+
+Authorization Code + PKCE
+
+when supported by the selected GitHub OAuth application architecture.
 
 ---
 
-45. MENU
+37. OAUTH SECURITY
 
-The browser menu should include:
+Implement:
 
-New Tab
-New Private Tab
+- State validation
+- PKCE where supported
+- Secure redirect handling
+- HTTPS in production
+- Secure token storage
+- Token expiration handling
+- Revocation handling
+
+Never:
+
+- Embed client secrets in APK
+- Put tokens in source code
+- Log tokens
+- Store tokens in plain preferences
+- Send tokens to unrelated servers
+
+Use Android Keystore-backed secure storage.
+
+---
+
+38. GITHUB ACCOUNT
+
+After authentication:
+
+GitHub
+
+@username
+
+Profile
+Repositories
+Starred
+Issues
+Pull Requests
+Releases
+
+Disconnect
+
+Show:
+
+- Avatar
+- Username
+- Display name
+- Public profile information
+
+Only request and display authorized information.
+
+---
+
+39. GITHUB API
+
+Use the official GitHub API.
+
+Support:
+
+Profile
+
+- Username
+- Avatar
+- Bio
+- Followers
+- Following
+
+Repositories
+
+- Name
+- Description
+- Stars
+- Forks
+- Language
+- Topics
+- Default branch
+
+Releases
+
+- Release name
+- Tag
+- Release notes
+- Assets
+- Download links
+
+Issues
+
+- List
+- Open issue page
+
+Pull Requests
+
+- List
+- Open PR page
+
+Handle:
+
+- 401
+- 403
+- 404
+- Rate limits
+- Network failures
+- Offline state
+
+---
+
+40. GITHUB WEBSITE
+
+"https://github.com" must remain a normal website.
+
+Users can:
+
+- Browse GitHub
+- Sign in
+- View repositories
+- Search
+- View source
+- View issues
+- View PRs
+- View releases
+- Download assets
+
+Do not create a fake GitHub website.
+
+---
+
+41. GITHUB QUICK ACCESS
+
+If authenticated, display:
+
+GitHub
+
+My Profile
+Repositories
+Starred
+Issues
+Pull Requests
+Releases
+
+Use real API data.
+
+If unauthenticated:
+
+Connect GitHub
+
+[ Continue with GitHub ]
+
+---
+
+42. GITHUB REPOSITORY SCREEN
+
+Optional native repository viewer.
+
+Display:
+
+Owner / Repository
+
+Description
+
+★ Stars
+Forks
+Issues
+
+README
+Files
+Commits
+Releases
+
+Buttons:
+
+Open on GitHub
+Download Release
+
+Never fake repository statistics.
+
+---
+
+43. GITHUB RELEASES
+
+Create a release browser.
+
+Show:
+
+ROCK BROWSER
+v1.0.0
+
+Release notes
+
+Assets
+
+ROCK-BROWSER-release.apk
+ROCK-BROWSER-source.zip
+
+[Download]
+
+Use actual GitHub release data.
+
+---
+
+44. GITHUB DISCONNECT
+
+Provide:
+
+Disconnect GitHub
+
+Confirmation:
+
+Disconnect GitHub?
+
+Your local GitHub authentication
+will be removed from ROCK BROWSER.
+
+[Cancel] [Disconnect]
+
+Delete stored authentication data securely.
+
+---
+
+45. GITHUB API RATE LIMITS
+
+Detect API rate limiting.
+
+Display:
+
+GitHub API limit reached.
+
+Please try again later.
+
+[Retry]
+
+Do not continuously retry and waste network resources.
+
+---
+
+46. OFFLINE MODE
+
+When offline:
+
+- Browser pages already available may remain visible
+- Bookmarks remain accessible
+- History remains accessible
+- Settings remain accessible
+- GitHub API calls show offline state
+- Retry becomes available
+
+Do not crash.
+
+---
+
+47. ERROR PAGES
+
+Create ROCK-branded error states.
+
+Examples:
+
+No Internet
+
+ROCK BROWSER couldn't connect.
+
+[Try Again]
+
+Page Unavailable
+
+The website couldn't be loaded.
+
+[Reload]
+
+For certificate errors, show the actual security issue.
+
+Never bypass certificate validation.
+
+---
+
+48. FIND IN PAGE
+
+Implement a mobile find bar.
+
+Features:
+
+- Search
+- Previous
+- Next
+- Match count
+- Close
+
+---
+
+49. DESKTOP SITE
+
+Add:
+
+Desktop site
+
+to the browser menu.
+
+Allow users to toggle desktop user-agent behavior where supported.
+
+Persist the setting appropriately.
+
+---
+
+50. SHARE
+
+Use Android Sharesheet.
+
+Share:
+
+- URL
+- Page title
+
+Example:
+
+Share page
+
+---
+
+51. ADD TO HOME SCREEN
+
+Support installable web apps/PWA behavior where Android/WebView supports it.
+
+Use proper Android mechanisms.
+
+Do not fake app installation.
+
+---
+
+52. BROWSER MENU
+
+Use a polished bottom sheet.
+
+Items:
+
+New tab
+New private tab
 Bookmarks
 History
 Downloads
 Share
-Add Bookmark
-Find in Page
-Desktop Site
-Settings
+Find in page
+Desktop site
+Add to home screen
 GitHub
+Settings
 About
 
-Only show actions that are valid for the current page.
+Show icons and labels.
+
+Use touch-friendly spacing.
 
 ---
 
-46. FIND IN PAGE
+53. SETTINGS SCREEN
 
-Provide:
+Create a polished settings experience.
 
-- Search text
-- Previous result
-- Next result
-- Match count
-- Close
+General
 
-Use WebView's native find functionality.
+- Homepage
+- Search engine
+- Startup behavior
 
----
+Appearance
 
-47. DESKTOP SITE
+- Light
+- Dark
+- System
+- Accent
+- Toolbar style
 
-Provide:
+Tabs
 
-Request Desktop Site
+- Restore previous tabs
+- Tab layout
+- New tab behavior
 
-Store the preference globally or per-site if implemented.
+Privacy
 
----
-
-48. SHARING
-
-Support Android Sharesheet.
-
-Users should be able to share:
-
-- Current URL
-- Page title
-- GitHub repository URL
-
----
-
-49. COPY / PASTE
-
-The address bar must support normal Android clipboard operations.
-
-Provide:
-
-- Copy
-- Paste
-- Cut
-- Select all
-
----
-
-50. FILE UPLOAD
-
-Support web pages requesting file selection.
-
-Handle:
-
-- Images
-- Documents
-- Multiple files where supported
-
-Respect Android storage and permission requirements.
-
----
-
-51. MEDIA SUPPORT
-
-Support standard WebView media behavior.
-
-Handle:
-
-- Video
-- Audio
-- Fullscreen video
-- Media permissions
-
-Ensure lifecycle handling when leaving and returning to the browser.
-
----
-
-52. LIFECYCLE
-
-Correctly handle:
-
-onCreate
-onStart
-onResume
-onPause
-onStop
-onDestroy
-
-WebView resources must not leak.
-
-Tabs must restore correctly after:
-
-- Rotation
-- Process recreation
-- Backgrounding
-- Memory pressure where possible
-
----
-
-53. CRASH RESILIENCE
-
-The application must avoid crashing when:
-
-- WebView fails
-- GitHub API fails
-- Network disappears
-- A page is malformed
-- Download fails
-- Permission is rejected
-- OAuth is cancelled
-- Activity is recreated
-
-Show recovery UI instead.
-
----
-
-54. PRIVACY
-
-Privacy must be a core product principle.
-
-Required:
-
-- Private browsing
-- Permission controls
+- Cookies
 - Safe Browsing
-- Mixed-content protection
-- Local storage controls
 - Clear browsing data
-- Transparent GitHub authentication
+- Site permissions
 
-Do not collect unnecessary browsing data.
+Downloads
+
+- Download location
+- Ask where to save
+
+GitHub
+
+- Connected account
+- GitHub integration
+- Disconnect
+
+Advanced
+
+- JavaScript
+- Developer options
+- Experimental features
 
 ---
 
-55. SECURITY
+54. THEME SYSTEM
 
-Security-sensitive data must never be logged.
+Support:
+
+Light
+Dark
+System Default
+
+Persist the selection with DataStore.
+
+Ensure every screen follows the theme.
+
+---
+
+55. ANIMATIONS
+
+Use subtle animations:
+
+- Tab open
+- Tab close
+- Tab switching
+- Bottom sheet
+- Address bar focus
+- Loading
+- Page transitions
+- GitHub account connection
+
+Animations must be:
+
+- Fast
+- Smooth
+- Purposeful
+
+Avoid unnecessary animation.
+
+Respect accessibility preferences.
+
+---
+
+56. SPLASH SCREEN
+
+Use Android's splash-screen API.
+
+Display:
+
+ROCK
+BROWSER
+
+Keep the splash short.
+
+Do not delay startup unnecessarily.
+
+---
+
+57. ONBOARDING
+
+First launch:
+
+Welcome to ROCK BROWSER
+
+Fast browsing.
+Private controls.
+ROCK design.
+Optional GitHub integration.
+
+[Get Started]
+
+Allow:
+
+Skip
+
+GitHub must never be mandatory.
+
+---
+
+58. ACCESSIBILITY
+
+Support:
+
+- TalkBack
+- Content descriptions
+- Accessible buttons
+- Keyboard navigation where applicable
+- Large text
+- Contrast
+- Focus states
+- 48dp minimum touch targets
+
+Test with Android accessibility tools.
+
+---
+
+59. PERFORMANCE
+
+Optimize for mobile.
+
+Priorities:
+
+1. Fast startup
+2. Smooth scrolling
+3. Fast tab switching
+4. Low unnecessary memory use
+5. Efficient database access
+6. Efficient API requests
+7. Low battery usage
+
+Avoid unnecessary background work.
+
+---
+
+60. DATABASE
+
+Use Room.
+
+Implement migrations.
+
+Never delete existing user data during an app update.
+
+Use indexes for frequently searched fields.
+
+---
+
+61. DATASTORE
+
+Use DataStore for:
+
+Theme
+Search engine
+Homepage
+Privacy preferences
+Tab preferences
+Download preferences
+Onboarding state
+
+---
+
+62. SECURITY
+
+Security requirements:
+
+- Android Keystore
+- Secure OAuth
+- No hard-coded secrets
+- No token logging
+- No password storage
+- Safe WebView configuration
+- Secure network communication
+- Minimal permissions
+- Secure file handling
+
+Run dependency/security checks where practical.
+
+---
+
+63. ANDROID PERMISSIONS
+
+Only request permissions when required.
+
+Possible permissions:
+
+INTERNET
+ACCESS_NETWORK_STATE
+CAMERA
+RECORD_AUDIO
+ACCESS_FINE_LOCATION
+ACCESS_COARSE_LOCATION
+POST_NOTIFICATIONS
+
+Do not add permissions without a clear feature requirement.
+
+Avoid unnecessary storage permissions.
+
+---
+
+64. LOGGING
+
+Use structured development logging.
 
 Never log:
 
-OAuth tokens
-Authorization codes
-Cookies
-Passwords
-Private URLs
-Sensitive WebView data
+- Passwords
+- OAuth tokens
+- Cookies
+- Sensitive personal data
 
-Authentication data should use secure Android storage mechanisms where appropriate.
+Disable verbose debugging in release builds.
 
 ---
 
-56. GITHUB TOKEN SECURITY
+65. TESTING
 
-Never:
+Create unit tests for:
 
-- Hard-code tokens
-- Commit tokens
-- Put secrets in Git
-- Put client secrets in source
-- Print authentication headers
-
-Use secure storage.
-
----
-
-57. NETWORK SECURITY
-
-Use HTTPS wherever possible.
-
-Do not bypass:
-
-SSL certificate errors
-Hostname validation
-Authentication validation
-
-Only permit insecure behavior when explicitly required and safely controlled.
-
----
-
-58. LOGGING
-
-Production builds must minimize sensitive logging.
-
-Create a logging abstraction:
-
-RockLogger
-
-Debug builds may provide detailed diagnostics.
-
-Release builds should remove or restrict sensitive logs.
-
----
-
-59. TESTING
-
-Implement:
-
-Unit tests
-
-- ViewModels
-- Use cases
-- Repositories
+- URL parser
 - Search engine
-- URL parsing
-- GitHub URL parsing
-
-UI tests
-
-- Home
-- Browser toolbar
-- Tabs
+- Tab manager
+- Bookmark repository
+- History repository
 - Settings
-- GitHub login
-- GitHub dashboard
+- GitHub API repository
+- OAuth state handling
 
-Integration tests
+Create Android tests for:
 
-- Database
-- GitHub API
-- Navigation
-- Tab restoration
-
----
-
-60. BUILD VALIDATION
-
-Before release:
-
-./gradlew clean
-./gradlew test
-./gradlew lint
-./gradlew assembleDebug
-./gradlew assembleRelease
-
-All required checks must pass.
+- Browser screen
+- Tab creation
+- Tab switching
+- Bookmark flow
+- Settings
+- Theme switching
+- Private mode
 
 ---
 
-61. BUILD REQUIREMENTS
-
-Development environment:
-
-- Android Studio Jellyfish or newer
-- JDK 17+
-- Android SDK 35
-- Android 10+ test device/emulator
-
-These requirements are directly specified in the supplied README.
-
----
-
-62. DEBUG BUILD
-
-Provide:
-
-ROCK-BROWSER-debug.apk
-
-Debug build should include:
-
-- Development logging
-- Debug diagnostics
-- Non-production configuration
-
-Never ship production credentials in debug configuration.
-
----
-
-63. RELEASE BUILD
-
-Provide:
-
-ROCK-BROWSER-release.apk
-
-Release build must:
-
-- Be signed
-- Disable debug behavior
-- Minimize sensitive logs
-- Use production configuration
-- Pass tests
-- Pass lint
-- Pass build validation
-
-The README specifies:
-
-./gradlew assembleRelease
-
-for producing a release APK.
-
----
-
-64. GITHUB ACTIONS
-
-Create CI workflows.
-
-Suggested:
-
-.github/workflows/
-├── android-ci.yml
-├── release.yml
-└── dependency-check.yml
-
-Android CI
+66. BUILD CHECK
 
 Run:
 
+./gradlew clean
+./gradlew lint
+./gradlew test
+./gradlew assembleDebug
+
+Then:
+
+./gradlew assembleRelease
+
+Fix every blocking error.
+
+Do not declare success if the APK does not build.
+
+---
+
+67. GITHUB ACTIONS
+
+Create:
+
+.github/workflows/android.yml
+
+CI:
+
 Checkout
 ↓
-Setup JDK
+JDK setup
+↓
+Android SDK
 ↓
 Gradle cache
 ↓
-Unit tests
-↓
 Lint
 ↓
-Build
+Unit tests
 ↓
-Upload artifacts
+Build Debug APK
+↓
+Upload artifact
+
+Release workflow:
+
+Git tag
+↓
+Build Release
+↓
+Run tests
+↓
+Create GitHub Release
+↓
+Upload APK/AAB
+
+Never commit signing keys.
+
+Use GitHub Secrets for signing credentials.
 
 ---
 
-65. RELEASE WORKFLOW
+68. RELEASE
 
-Release workflow should:
-
-1. Trigger from GitHub release/tag
-2. Checkout source
-3. Configure Java
-4. Restore Gradle dependencies
-5. Run tests
-6. Run lint
-7. Build release APK
-8. Upload APK
-9. Publish release artifact
-
----
-
-66. VERSIONING
-
-Use:
-
-MAJOR.MINOR.PATCH
-
-Example:
+Initial version:
 
 1.0.0
-1.0.1
-1.1.0
-2.0.0
 
-Android "versionCode" must monotonically increase.
+Artifacts:
+
+ROCK-BROWSER-debug.apk
+ROCK-BROWSER-release.apk
+ROCK-BROWSER-release.aab
+
+Use proper release signing.
+
+Do not distribute debug builds as production releases.
 
 ---
 
-67. DOCUMENTATION
+69. APP ICON
 
-Maintain:
+Create an adaptive launcher icon.
 
-README.md
-ROCK-BROWSER-ANDROID-BUILD.md
+Requirements:
+
+- ROCK branding
+- Simple
+- Premium
+- Recognizable
+- Dark/light compatible
+- High resolution
+
+Do not use a generic browser icon.
+
+---
+
+70. README
+
+Create a professional "README.md".
+
+Include:
+
+- ROCK BROWSER description
+- Features
+- Screenshots
+- Installation
+- Build instructions
+- Architecture
+- GitHub integration
+- Privacy
+- Security
+- Supported Android versions
+- Contributing
+- License
+
+Add GitHub Actions status badges.
+
+---
+
+71. SECURITY FILES
+
+Create:
+
 SECURITY.md
 CONTRIBUTING.md
+CODE_OF_CONDUCT.md
+LICENSE
 CHANGELOG.md
 
-README should remain user-focused.
-
-Build specification should remain developer-focused.
+Keep documentation accurate.
 
 ---
 
-68. CONTRIBUTING
+72. PRIVACY POLICY
 
-Follow the existing project contribution model:
+Document:
 
-git checkout -b feature/AmazingFeature
-git commit -m "Add some AmazingFeature"
-git push origin feature/AmazingFeature
-
-Then open a Pull Request.
-
-The supplied README defines this contribution workflow.
-
----
-
-69. SECURITY REPORTING
-
-Maintain:
-
-SECURITY.md
-
-Security vulnerabilities should not be reported through normal public issues.
-
-The supplied README explicitly directs security researchers to "SECURITY.md".
-
----
-
-70. LICENSE
-
-The project uses the MIT License.
-
-Maintain:
-
-LICENSE
-
-The supplied README identifies the project as MIT licensed.
-
----
-
-71. REQUIRED MVP FEATURES
-
-Version 1.0 must include:
-
-Browser
-
-- 
+- What browsing data is stored
+- Where it is stored
+- What GitHub data is acc
