@@ -9,7 +9,7 @@ Browser engine: Android Chromium-based WebView
 Package: "com.sayanthrock.rockbrowser"
 Brand: Sayanth Rock»
 
----
+--- 
 
 1. BUILD OBJECTIVE
 
