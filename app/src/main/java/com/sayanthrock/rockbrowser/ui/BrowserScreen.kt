@@ -38,7 +38,9 @@ fun BrowserScreen(
     val tabs by viewModel.tabs.collectAsState()
     val activeTabId by viewModel.activeTabId.collectAsState()
     val activeTab = tabs.find { it.id == activeTabId }
-    val context = LocalContext.current
+
+
+
 
     var webView: WebView? by remember { mutableStateOf(null) }
     var urlInput by remember { mutableStateOf(activeTab?.url ?: "") }
