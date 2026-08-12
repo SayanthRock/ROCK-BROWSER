@@ -7,5 +7,16 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.sayanthrock.rockbrowser.browser.engine.RockWebChromeClient
 import com.sayanthrock.rockbrowser.browser.engine.RockWebViewClient
 @Composable fun BrowserWebView(url: String, modifier: Modifier = Modifier) {
-    AndroidView(modifier = modifier, factory = { context -> WebView(context).apply { layoutParams = ViewGroup.LayoutParams(-1, -1); webViewClient = RockWebViewClient(); webChromeClient = RockWebChromeClient(); if (url.isNotEmpty()) loadUrl(url) } }, update = { if (url.isNotEmpty() && it.url != url) it.loadUrl(url) })
+    AndroidView(modifier = modifier, factory = { context ->
+        WebView(context).apply {
+            layoutParams = ViewGroup.LayoutParams(-1, -1)
+            settings.javaScriptEnabled = true
+            settings.domStorageEnabled = true
+            webViewClient = RockWebViewClient()
+            webChromeClient = RockWebChromeClient()
+            if (url.isNotEmpty()) loadUrl(url)
+        }
+    }, update = {
+        if (url.isNotEmpty() && it.url != url) it.loadUrl(url)
+    })
 }
