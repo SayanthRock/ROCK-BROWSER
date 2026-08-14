@@ -1597,3 +1597,5 @@ Document:
 - What browsing data is stored
 - Where it is stored
 - What GitHub data is acc
+## Fixes
+- Generated `test-release-key.jks` to fix the release build.
