@@ -2,10 +2,19 @@ plugins { id("com.android.application"); id("org.jetbrains.kotlin.android") }
 android {
     namespace = "com.sayanthrock.rockbrowser"; compileSdk = 34
     defaultConfig { applicationId = "com.sayanthrock.rockbrowser"; minSdk = 29; targetSdk = 34; versionCode = 1; versionName = "1.0.0"; testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"; vectorDrawables { useSupportLibrary = true } }
+    signingConfigs {
+        create("release") {
+            storeFile = rootProject.file("test-release-key.jks")
+            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "testpassword"
+            keyAlias = "my-alias"
+            keyPassword = System.getenv("KEY_PASSWORD") ?: "testpassword"
+        }
+    }
     buildTypes {
-        release {
+        getByName("release") {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }; kotlinOptions { jvmTarget = "17" }; buildFeatures { compose = true }; composeOptions { kotlinCompilerExtensionVersion = "1.5.1" }
